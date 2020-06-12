@@ -23,10 +23,20 @@ public class SpringBootCachingApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
+        logger.info("------------------ demo @Cacheable --------------------");
         logger.info("find user with id = 1: {}", userService.findUserById(1));
         logger.info("find user with id = 1: {}", userService.findUserById(1));
         logger.info("find user with id = 2: {}", userService.findUserById(2));
         logger.info("find user with id = 2: {}", userService.findUserById(2));
+
+        logger.info("------------------ demo @CacheEvict --------------------");
+        userService.clearCache();
         logger.info("find user with id = 1: {}", userService.findUserById(1));
+        logger.info("find user with id = 2: {}", userService.findUserById(2));
+
+        logger.info("------------------ demo @CachePut --------------------");
+        logger.info("reload and find user with id = 1: {}", userService.reloadAndFindUserById(1));
+        logger.info("find user with id = 1: {}", userService.findUserById(1));
+        logger.info("find user with id = 2: {}", userService.findUserById(2));
     }
 }

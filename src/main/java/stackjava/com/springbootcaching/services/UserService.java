@@ -1,5 +1,7 @@
 package stackjava.com.springbootcaching.services;
 
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import stackjava.com.springbootcaching.models.User;
@@ -21,5 +23,19 @@ public class UserService {
         } catch (InterruptedException e) {
             throw new IllegalStateException(e);
         }
+    }
+
+    @CacheEvict("user")
+    public void clearCacheById(int id) {
+    }
+
+    @CacheEvict(value = "user", allEntries = true)
+    public void clearCache() {
+    }
+
+    @CachePut(value = "user")
+    public User reloadAndFindUserById(int id) {
+        simulateSlowService();
+        return new User(id, "reload Any name");
     }
 }
